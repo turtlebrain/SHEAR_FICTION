@@ -1,7 +1,7 @@
 #pragma once
 #include <vector>
 using namespace std;
-// 1st order tensor are represented by a double s_ 
+// 1st order tensors are represented by a double s_ 
 // 2nd order tensors are represented by a 9x1 Array t_: {t11 t12 t13 t21 t22 t23 t31 t32 t33}
 // 4th order tensors are represented by a 9x9 Arrary T_: {T1' T2' T3' T4' T5' T6' T7' T8' T9'} , T1...T9 are 9x1 Vectors
 class TensorOps
