@@ -1,6 +1,6 @@
 #include "PlasticMat.h"
 #include <iostream>
-#include "TensorOps.h"
+#include "Tensors.h"
 #include <vector>
 using namespace std;
 

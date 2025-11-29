@@ -1,6 +1,6 @@
 #pragma once
 #include <iostream>
-#include "TensorOps.h"
+#include "Tensors.h"
 #include "ProbabilisticMat.h"
 #include <vector>
 using namespace std;

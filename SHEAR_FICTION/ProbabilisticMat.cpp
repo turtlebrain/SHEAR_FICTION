@@ -1,7 +1,7 @@
 #include "ProbabilisticMat.h"
 #include "PlasticMat.h"
 #include <iostream>
-#include "TensorOps.h"
+#include "Tensors.h"
 #include <vector>
 #include <math.h>
 using namespace std;

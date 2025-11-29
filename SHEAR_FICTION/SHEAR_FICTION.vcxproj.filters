@@ -21,10 +21,10 @@
     <ClCompile Include="PlasticMat.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="TensorOps.cpp">
+    <ClCompile Include="ProbabilisticMat.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="ProbabilisticMat.cpp">
+    <ClCompile Include="Tensors.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -32,10 +32,10 @@
     <ClInclude Include="PlasticMat.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="TensorOps.h">
+    <ClInclude Include="ProbabilisticMat.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="ProbabilisticMat.h">
+    <ClInclude Include="Tensors.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
