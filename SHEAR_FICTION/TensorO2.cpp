@@ -12,6 +12,11 @@ double& TensorO2::t2(size_t i, size_t j)
 	return _m_t2[ind0_ij];
 }
 
+double& TensorO2::t2(size_t ind0_ij)
+{
+	return _m_t2[ind0_ij];
+}
+
 TensorO2 TensorO2::contrac1X(TensorO2& tensor2)
 {
 	TensorO2 C;
@@ -88,15 +93,15 @@ TensorO2 TensorO2::inverse()
 	TensorO2 Amin; TensorO2 Acof; TensorO2 invA;
 	if (detA == 0) { cout << "Tensor is singular" << endl; exit(0); }
 
-	Amin._m_t2[0] = (this->_m_t2[4] * this->_m_t2[8]) - (this->_m_t2[5] * this->_m_t2[7]);
-	Amin._m_t2[1] = (this->_m_t2[3] * this->_m_t2[8]) - (this->_m_t2[5] * this->_m_t2[6]);
-	Amin._m_t2[2] = (this->_m_t2[3] * this->_m_t2[8]) - (this->_m_t2[4] * this->_m_t2[6]);
-	Amin._m_t2[3] = (this->_m_t2[1] * this->_m_t2[8]) - (this->_m_t2[2] * this->_m_t2[7]);
-	Amin._m_t2[4] = (this->_m_t2[0] * this->_m_t2[8]) - (this->_m_t2[2] * this->_m_t2[6]);
-	Amin._m_t2[5] = (this->_m_t2[0] * this->_m_t2[7]) - (this->_m_t2[1] * this->_m_t2[6]);
-	Amin._m_t2[6] = (this->_m_t2[1] * this->_m_t2[5]) - (this->_m_t2[2] * this->_m_t2[4]);
-	Amin._m_t2[7] = (this->_m_t2[0] * this->_m_t2[5]) - (this->_m_t2[2] * this->_m_t2[3]);
-	Amin._m_t2[8] = (this->_m_t2[0] * this->_m_t2[4]) - (this->_m_t2[1] * this->_m_t2[3]);
+	Amin._m_t2[0] = (_m_t2[4] * _m_t2[8]) - (_m_t2[5] * _m_t2[7]);
+	Amin._m_t2[1] = (_m_t2[3] * _m_t2[8]) - (_m_t2[5] * _m_t2[6]);
+	Amin._m_t2[2] = (_m_t2[3] * _m_t2[8]) - (_m_t2[4] * _m_t2[6]);
+	Amin._m_t2[3] = (_m_t2[1] * _m_t2[8]) - (_m_t2[2] * _m_t2[7]);
+	Amin._m_t2[4] = (_m_t2[0] * _m_t2[8]) - (_m_t2[2] * _m_t2[6]);
+	Amin._m_t2[5] = (_m_t2[0] * _m_t2[7]) - (_m_t2[1] * _m_t2[6]);
+	Amin._m_t2[6] = (_m_t2[1] * _m_t2[5]) - (_m_t2[2] * _m_t2[4]);
+	Amin._m_t2[7] = (_m_t2[0] * _m_t2[5]) - (_m_t2[2] * _m_t2[3]);
+	Amin._m_t2[8] = (_m_t2[0] * _m_t2[4]) - (_m_t2[1] * _m_t2[3]);
 
 	for (int i = 1; i <= 9; i++) {
 		if ((i % 2) == 0) {

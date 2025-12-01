@@ -8,11 +8,13 @@ class TensorO2
 {
 public:
 	TensorO2() { _m_t2.resize(9, 0.0); }
-	TensorO2(const vector<double>& tensor2) { _m_t2 = tensor2; }
+	TensorO2(const vector<double>& tensor2) : _m_t2(tensor2) {}
+	TensorO2(const TensorO2& tensor2) : _m_t2(tensor2._m_t2) {}
 	~TensorO2() {}
 
 public:
 	double& t2(size_t i, size_t j);
+	double& t2(size_t ind0_ij);
 
 public:
 	// Tensor Operations
