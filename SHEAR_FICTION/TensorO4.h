@@ -18,3 +18,20 @@ public:
 private:
 	vector<vector<double>> _m_t4;
 };
+
+class UnitTensorO4 : TensorO4
+{
+public:
+	UnitTensorO4() {}
+	~UnitTensorO4() {}
+
+	enum IDTensor
+	{
+		// Fourth-Order Unit Tensor
+		_Unit4,
+		_Unit4Sym,
+		_Unit4AntiSym,
+		_Unit4Vol,
+		_Unit4Dev
+	};
+};
