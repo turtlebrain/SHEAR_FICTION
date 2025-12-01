@@ -3,6 +3,7 @@
 #include <vector>
 using namespace std;
 
+
 TensorOps::TensorOps()
 {
 
@@ -12,6 +13,7 @@ TensorOps::~TensorOps()
 {
 
 }
+
 
 vector<double> TensorOps::tOps_1XContrac(const vector<double>& A, const vector<double>& B) {
 	int ind_ji; int ind_ki; int ind_kj;
@@ -294,29 +296,3 @@ vector<vector<double>> TensorOps::unit_4t(IDTensor _U4) {
 	return C;
 }
 
-void TensorContainer::AddTensor(const vector<vector<double>>& T4) {
-	T4_container.push_back(T4);
-}
-
-void TensorContainer::AddTensor(const vector<double>& T2) {
-	T2_container.push_back(T2);
-}
-
-void TensorContainer::AddTensor(const double T1) {
-	T1_container.push_back(T1);
-}
-
-vector<vector<double>> TensorContainer::GetT4(int index) const {
-	int last = sizeof(T4_container) / sizeof(T4_container[0]);
-	return T4_container[last - 1 - index];
-}
-
-vector<double> TensorContainer::GetT2(int index) const {
-	int last = sizeof(T2_container) / sizeof(T2_container[0]);
-	return T2_container[last - 1 - index];
-}
-
-double TensorContainer::GetT1(int index) const {
-	int last = sizeof(T1_container) / sizeof(T1_container[0]);
-	return T1_container[last - 1 - index];
-}

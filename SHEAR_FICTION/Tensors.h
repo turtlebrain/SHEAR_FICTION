@@ -1,9 +1,7 @@
 #pragma once
 #include <vector>
 using namespace std;
-// 1st order tensor are represented by a double s_ 
-// 2nd order tensors are represented by a 9x1 Array t_: {t11 t12 t13 t21 t22 t23 t31 t32 t33}
-// 4th order tensors are represented by a 9x9 Arrary T_: {T1' T2' T3' T4' T5' T6' T7' T8' T9'} , T1...T9 are 9x1 Vectors
+
 class TensorOps
 {
 public:
@@ -38,24 +36,6 @@ public:
 	vector<double> m_vol_tensor, m_dev_tensor;
 };
 
-class TensorContainer
-{
-public:
-	// There should be a RemoveT4 :https://stackoverflow.com/questions/39912/how-do-i-remove-an-item-from-a-stl-vector-with-a-certain-value
-	void AddTensor(const vector<vector<double>>& T4);
-	void AddTensor(const vector <double>& T2);
-	void AddTensor(const double T1);
-	vector<vector<double>> GetT4(int index) const;
-	vector<double> GetT2(int index) const;
-	double GetT1(int index) const;
-	
-
-
-protected:
-	vector<vector<vector<double>>> T4_container;
-	vector<vector<double>> T2_container;
-	vector<double> T1_container;
-};
 
 
 

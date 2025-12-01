@@ -150,11 +150,15 @@
     <ClCompile Include="PlasticMat.cpp" />
     <ClCompile Include="ProbabilisticMat.cpp" />
     <ClCompile Include="SHEAR_FICTION.cpp" />
+    <ClCompile Include="TensorO2.cpp" />
+    <ClCompile Include="TensorO4.cpp" />
     <ClCompile Include="Tensors.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="PlasticMat.h" />
     <ClInclude Include="ProbabilisticMat.h" />
+    <ClInclude Include="TensorO2.h" />
+    <ClInclude Include="TensorO4.h" />
     <ClInclude Include="Tensors.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

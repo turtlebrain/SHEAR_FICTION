@@ -13,6 +13,9 @@
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
+    <Filter Include="Tensors">
+      <UniqueIdentifier>{95480dc0-9cf6-4c89-850a-53f877470c4e}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="SHEAR_FICTION.cpp">
@@ -27,6 +30,12 @@
     <ClCompile Include="Tensors.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="TensorO2.cpp">
+      <Filter>Tensors</Filter>
+    </ClCompile>
+    <ClCompile Include="TensorO4.cpp">
+      <Filter>Tensors</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="PlasticMat.h">
@@ -37,6 +46,12 @@
     </ClInclude>
     <ClInclude Include="Tensors.h">
       <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="TensorO2.h">
+      <Filter>Tensors</Filter>
+    </ClInclude>
+    <ClInclude Include="TensorO4.h">
+      <Filter>Tensors</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
