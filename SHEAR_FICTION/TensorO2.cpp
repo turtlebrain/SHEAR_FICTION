@@ -1,4 +1,5 @@
 #include "TensorO2.h"
+#include "tensor_operations.h"
 #include <iostream>
 using namespace std;
 
@@ -79,4 +80,19 @@ TensorO2 TensorO2::inverse()
 	}
 
 	return invA;
+}
+
+double TensorO2::normL2()
+{
+	double C = TensorOperations::contrac2X(*this, *this);
+	return C;
+}
+
+tuple<TensorO2, TensorO2> TensorO2::volDecomp()
+{
+	UnitTensorO4 u4vol = UnitTensorO4(eIDTensor::UNIT_4_VOL);
+	UnitTensorO4 u4dev = UnitTensorO4(eIDTensor::UNIT_4_DEV);
+	TensorO2 vol_tensor = TensorOperations::contrac2X(u4vol, *this);
+	TensorO2 dev_tensor = TensorOperations::contrac2X(u4dev, *this);
+	return { vol_tensor, dev_tensor };
 }

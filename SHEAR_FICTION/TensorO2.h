@@ -20,6 +20,7 @@ public:
 	TensorO2 transpose();						//Transpose Operation -> Aij= Aji		
 	double determinant();						//determinant Operation -> det(A)
 	TensorO2 inverse();							//inverse Operation -> inv(A)
+	double normL2();							//Euclidean norm (L2) ||A||
 	tuple<TensorO2, TensorO2> volDecomp();		//Volumetric-deviatoric tensor decomposition
 
 private:

@@ -31,7 +31,7 @@ private:
 	vector<vector<double>> _m_t4;
 };
 
-class UnitTensorO4 : TensorO4
+class UnitTensorO4 : public TensorO4
 {
 public:
 	UnitTensorO4(eIDTensor u4 = eIDTensor::UNIT_4) : TensorO4(_unit4(u4)) {}
