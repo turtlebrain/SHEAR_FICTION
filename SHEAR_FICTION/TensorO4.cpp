@@ -1,5 +1,7 @@
-#include "TensorO4.h"
 #include "TensorO2.h"
+#include "TensorO4.h"
+#include "tensor_operations.h"
+
 
 double& TensorO4::t4(size_t i, size_t j, size_t k, size_t l)
 {
@@ -49,7 +51,7 @@ TensorO4 UnitTensorO4::_unit4(eIDTensor u4)
 		}
 	}
 
-	TensorO4 dy_kronekr = kronekr.dyadProduct(kronekr);
+	TensorO4 dy_kronekr = TensorOperations::dyadProduct(kronekr, kronekr);
 
 	switch (u4) {
 	case eIDTensor::UNIT_4:

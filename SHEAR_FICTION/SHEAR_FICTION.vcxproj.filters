@@ -36,6 +36,9 @@
     <ClCompile Include="TensorO4.cpp">
       <Filter>Tensors</Filter>
     </ClCompile>
+    <ClCompile Include="tensor_operations.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="PlasticMat.h">
@@ -52,6 +55,9 @@
     </ClInclude>
     <ClInclude Include="TensorO4.h">
       <Filter>Tensors</Filter>
+    </ClInclude>
+    <ClInclude Include="tensor_operations.h">
+      <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

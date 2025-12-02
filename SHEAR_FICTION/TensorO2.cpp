@@ -1,6 +1,5 @@
 #include "TensorO2.h"
 #include <iostream>
-#include <tuple>
 using namespace std;
 
 double& TensorO2::t2(size_t i, size_t j)
@@ -15,45 +14,6 @@ double& TensorO2::t2(size_t i, size_t j)
 double& TensorO2::t2(size_t ind0_ij)
 {
 	return _m_t2[ind0_ij];
-}
-
-TensorO2 TensorO2::contrac1X(TensorO2& tensor2)
-{
-	TensorO2 C;
-	for (size_t k = 1; k <= 3; k++) {
-		for (size_t i = 1; i <= 3; i++) {
-			for (size_t j = 1; j <= 3; j++) {
-				C.t2(k, i) = this->t2(k, j) * tensor2.t2(j, i) + C.t2(k, i);
-			}
-		}
-	}
-	return C;
-}
-
-double TensorO2::contrac2X(TensorO2& tensor2)
-{
-	double C = 0;
-	for (int i = 1; i <= 3; i++) {
-		for (int j = 1; j <= 3; j++) {
-			C += this->t2(i, j) * tensor2.t2(i, j);
-		}
-	}
-	return C;
-}
-
-TensorO2 TensorO2::contrac2X(TensorO4& tensor4)
-{
-	TensorO2 C;
-	for (int i = 1; i <= 3; i++) {
-		for (int j = 1; j <= 3; j++) {
-			for (int k = 1; k <= 3; k++) {
-				for (int l = 1; l <= 3; l++) {
-					C.t2(i, j) = this->t2(k,l) * tensor4.t4(k, l, i, j) + C.t2(i, j);
-				}
-			}
-		}
-	}
-	return C;
 }
 
 double TensorO2::trace()
@@ -119,24 +79,4 @@ TensorO2 TensorO2::inverse()
 	}
 
 	return invA;
-}
-
-TensorO4 TensorO2::dyadProduct(TensorO2& tensor2)
-{
-	TensorO4 C;
-	for (int i = 1; i <= 3; i++) {
-		for (int j = 1; j <= 3; j++) {
-			for (int k = 1; k <= 3; k++) {
-				for (int l = 1; l <= 3; l++) {
-					C.t4(i,j,k,l) = this->t2(i,j) * tensor2.t2(k,l);
-				}
-			}
-		}
-	}
-	return C;
-}
-
-tuple<TensorO2, TensorO2> TensorO2::volDecomp()
-{
-	return { TensorO2(), TensorO2() };
 }

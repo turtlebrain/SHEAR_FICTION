@@ -20,8 +20,8 @@ public:
 
 	vector<double> tOps_1XContrac(const vector<double>& A, const vector<double>& B);									//Single contraction of two 2nd order tensors -> A.B
 	double tOps_2XContrac(const vector<double>& A, const vector<double>& B);											//Double contraction of two 2nd order tensors -> A:B	
-	vector<vector<double>> tOps_2XContrac(const vector<vector<double>>& A, const vector<vector<double>>& B);			//Double contraction of a 4th order and 2nd order tensor
-	vector<double> tOps_2XContrac(const vector<vector<double>>& A, const vector<double>& B);							//Double contraction of two 4th order tensors
+	vector<vector<double>> tOps_2XContrac(const vector<vector<double>>& A, const vector<vector<double>>& B);			//Double contraction of two 4th order tensors
+	vector<double> tOps_2XContrac(const vector<vector<double>>& A, const vector<double>& B);							//Double contraction of a 4th order and 2nd order tensor
 	vector<double> tOps_2XContrac(const vector<double>& A, const vector<vector<double>>& B);							//Double contraction of 2nd order and 4th order tensor
 	double tOps_trace(const vector<double>& A);																			//Trace Operation -> Aii = tr(A)
 	vector<double> tOps_transpose(const vector<double>& A);																//Transpose Operation -> Aij= Aji

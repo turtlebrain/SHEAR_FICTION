@@ -153,6 +153,7 @@
     <ClCompile Include="TensorO2.cpp" />
     <ClCompile Include="TensorO4.cpp" />
     <ClCompile Include="Tensors.cpp" />
+    <ClCompile Include="tensor_operations.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="PlasticMat.h" />
@@ -160,6 +161,7 @@
     <ClInclude Include="TensorO2.h" />
     <ClInclude Include="TensorO4.h" />
     <ClInclude Include="Tensors.h" />
+    <ClInclude Include="tensor_operations.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
