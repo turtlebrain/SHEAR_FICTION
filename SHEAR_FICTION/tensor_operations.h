@@ -1,6 +1,6 @@
 #pragma once
-#include "TensorO4.h"
-#include "TensorO2.h"
+#include "tensor_o4.h"
+#include "tensor_o2.h"
 using namespace std;
 
 class TensorOperations {

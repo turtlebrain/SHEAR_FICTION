@@ -1,5 +1,5 @@
-#include "TensorO2.h"
-#include "TensorO4.h"
+#include "tensor_o2.h"
+#include "tensor_o4.h"
 #include "tensor_operations.h"
 
 

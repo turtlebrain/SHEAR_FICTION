@@ -1,34 +1,33 @@
-#include "PlasticMat.h"
+#include "plastic_material.h"
+#include "tensor_operations.h"
 #include <iostream>
-#include "Tensors.h"
 #include <vector>
 using namespace std;
 
-UMAT_VonMisces::UMAT_VonMisces(double E, double v, double sigy, double H)
+UMAT_VonMisces::UMAT_VonMisces(RandomProcess E, RandomProcess v, RandomProcess sigy, RandomProcess H)
 {
-	m_young_modulus.mean = E;
-	m_poisson_ratio.mean = v;
-	m_sigma_y_init.mean = sigy;
-	m_hardening_slope.mean = H;
-	m_bulk_modulus.mean = E / (3 * (1 - 2 * v));
-	m_shear_modulus.mean = E / (2 * (1 + v));
+	m_young_modulus = E;
+	m_poisson_ratio = v;
+	m_sigma_y_init = sigy;
+	m_hardening_slope = H;
+	m_bulk_modulus = RandomProcess(E.getMean() / (3 * (1 - 2 * v.getMean())));
+	m_shear_modulus = RandomProcess(E.getMean() / (2 * (1 + v.getMean())));
 }
 
-void UMAT_VonMisces::EulerBackward(const vector<double>& delta_eps,const vector<double>& eps_tot_pstep,const vector<double>& eps_e_pstep, const vector<double>& sigma_pstep, const double eps_p_pstep) 
+void UMAT_VonMisces::EulerBackward(const TensorO2& delta_eps, const TensorO2& eps_tot_pstep, const TensorO2& eps_e_pstep, const TensorO2& sigma_pstep, const double eps_p_pstep) 
 {
 	//These locals should probably be accessed from the class
 	//Present values should be passed as arguments
-	TensorOps Tensor;
 	// Instantiation below can later become a SetMaterial function with input material model.
 	//UMAT_VonMisces VM_Mat(E, v);
-	vector<double> eps_tot_fstep(9);									//Total strain at time t_n+1
-	vector<double> eps_e_fstep(9), eps_e_trial_fstep(9);				//elastic strain at time t_n+1 
-	double eps_p_fstep, eps_p_trial_fstep;								//plastic strain at time t_n+1 
-	vector<double> p_fstep(9), s_fstep(9);								//volumetric and deviatoric stress at time t_n+1
-	vector<double> sigma_fstep(9);
+	TensorO2 eps_tot_fstep;											//Total strain at time t_n+1
+	TensorO2 eps_e_fstep, eps_e_trial_fstep;						//elastic strain at time t_n+1 
+	double eps_p_fstep, eps_p_trial_fstep;							//plastic strain at time t_n+1 
+	TensorO2 p_fstep, s_fstep;										//volumetric and deviatoric stress at time t_n+1
+	TensorO2 sigma_fstep;
  
-	vector<double> sigma_trial_fstep(9), p_trial_fstep(9), s_trial_fstep(9);;
-	vector<double> eps_e_vol_trial(9), eps_e_dev_trial(9);
+	TensorO2 sigma_trial_fstep, p_trial_fstep, s_trial_fstep;
+	TensorO2 eps_e_vol_trial, eps_e_dev_trial;
 
 	double q_trial_fstep;											//trial Von-Mises effective stress
 	double sigma_y;													//yield stress
@@ -39,26 +38,26 @@ void UMAT_VonMisces::EulerBackward(const vector<double>& delta_eps,const vector<
 	double resid_d;													//Residual derivative
 
 	eps_p_trial_fstep = eps_p_pstep;
+	TensorO2 eps_tot_pstep_copy = TensorO2(eps_tot_pstep);
+	TensorO2 delta_eps_copy = TensorO2(delta_eps);
 	for (int i = 0; i < 9; i++) {
-		eps_tot_fstep[i] = eps_tot_pstep[i] + delta_eps[i];
-		if (i == 0) eps_e_trial_fstep[i] = eps_tot_fstep[i] - eps_p_trial_fstep;
-		
+		eps_tot_fstep.t2(i) = eps_tot_pstep_copy.t2(i) + delta_eps_copy.t2(i);
+		if (i == 0) eps_e_trial_fstep.t2(i) = eps_tot_fstep.t2(i) - eps_p_trial_fstep;		
 	}
 
 	//Elastic trial state/Elastic predictor step
 	//D_elastic = VM_Mat.getLinearElasticTensor(E, v);
-	Tensor.tOps_volDecomp(eps_e_trial_fstep);
-	eps_e_dev_trial = Tensor.m_dev_tensor;
-	eps_e_vol_trial = Tensor.m_vol_tensor;
+	tie(eps_e_vol_trial, eps_e_dev_trial) = eps_e_trial_fstep.volDecomp();
+
 	double K = getK();
 	double G = getG();
 	for (int i = 0; i < 9; i++) {
 		//eps_e_trial_fstep[i] = eps_e_pstep[i] + delta_eps[i];
-		p_trial_fstep[i] =  K * eps_e_vol_trial[i]; 
-		s_trial_fstep[i] = 2 * G * eps_e_dev_trial[i];
-		sigma_trial_fstep[i] = s_trial_fstep[i] + p_trial_fstep[i];
+		p_trial_fstep.t2(i) =  K * eps_e_vol_trial.t2(i); 
+		s_trial_fstep.t2(i) = 2 * G * eps_e_dev_trial.t2(i);
+		sigma_trial_fstep.t2(i) = s_trial_fstep.t2(i) + p_trial_fstep.t2(i);
 	}
-	q_trial_fstep = sqrt((3.0 * (Tensor.tOps_2XContrac(s_trial_fstep, s_trial_fstep))/2.0));
+	q_trial_fstep = sqrt((3.0 * (TensorOperations::contrac2X(s_trial_fstep, s_trial_fstep))/2.0));
 	eps_p_trial_fstep = eps_p_pstep + delta_gamma;
 	H = getH();
 	sigma_y_init = getSigmaY0();
@@ -96,9 +95,9 @@ void UMAT_VonMisces::EulerBackward(const vector<double>& delta_eps,const vector<
 		p_fstep = p_trial_fstep;
 		eps_p_fstep = eps_p_pstep + delta_gamma;
 		for (int i = 0; i < 9; i++) {
-			s_fstep[i] = (1.0 - (delta_gamma * 3.0 * G) / q_trial_fstep) * s_trial_fstep[i];
-			sigma_fstep[i] = s_fstep[i] + p_fstep[i];
-			eps_e_fstep[i] = (1 / (2.0 * G)) * s_fstep[i] +  eps_e_vol_trial[i]; // (1 / (2.0 * G)) * s_fstep[i] +  (1 / 3.0) * eps_e_vol_trial[i]
+			s_fstep.t2(i) = (1.0 - (delta_gamma * 3.0 * G) / q_trial_fstep) * s_trial_fstep.t2(i);
+			sigma_fstep.t2(i) = s_fstep.t2(i) + p_fstep.t2(i);
+			eps_e_fstep.t2(i) = (1 / (2.0 * G)) * s_fstep.t2(i) +  eps_e_vol_trial.t2(i); // (1 / (2.0 * G)) * s_fstep[i] +  (1 / 3.0) * eps_e_vol_trial[i]
 		}
 	}
 
@@ -108,76 +107,70 @@ void UMAT_VonMisces::EulerBackward(const vector<double>& delta_eps,const vector<
 	setSigmaVolumetric(p_fstep);
 	setSigmaDeviatoric(s_fstep);
 	setSigma(sigma_fstep);
-
 }
 
-double UMAT_VonMisces::yield_function(const vector<double>& sigma, const double sigma_y)
+double UMAT_VonMisces::yield_function(const TensorO2& sigma, const double sigma_y)
 {
-	TensorOps Tensor;
-	vector<double> s_ij(9), s_ji(9);
+	TensorO2 s_ij, s_ji;
+	TensorO2 sigmaCopy = TensorO2(sigma);
 	double sigma_mean, J2, phi;
 	int ind_ij;
-	sigma_mean = (1 / 3.0) * (Tensor.tOps_trace(sigma));
+	sigma_mean = (1 / 3.0) * (sigmaCopy.trace());
 	for (int i = 1; i <= 3; i++) {
 		for (int j = 1; j <= 3; j++) {
-			ind_ij = 3 * (i - 1) + j;
-			if (i == j) s_ij[ind_ij-1] = sigma[ind_ij-1] - sigma_mean;
-			else s_ij[ind_ij-1] = sigma[ind_ij-1];
+			if (i == j) s_ij.t2(i,j) = sigmaCopy.t2(i,j) - sigma_mean;
+			else s_ij.t2(i,j) = sigmaCopy.t2(i,j);
 		}
 	}
-	s_ji = Tensor.tOps_transpose(s_ij);
-	J2 = (1 / 2.0) * (Tensor.tOps_2XContrac(s_ij, s_ji));
+	s_ji = s_ij.transpose();
+	J2 = (1 / 2.0) * (TensorOperations::contrac2X(s_ij, s_ji));
 	
 	phi = sqrt(3.0 * J2) - sigma_y;
 	return phi;
 }
 
-void UMAT_VonMisces::associative_flow_rule(const vector<double>& sigma)
+void UMAT_VonMisces::associative_flow_rule(const TensorO2& sigma)
 {
-	TensorOps Tensor;
-	vector<double> s_ij(9), N_flow_vector(9);
+	TensorO2 s_ij, N_flow_vector;
 	double sigma_mean;
 	int ind_ij;
-
-	sigma_mean = (1 / 3) * (Tensor.tOps_trace(sigma));
+	TensorO2 sigmaCopy = TensorO2(sigma);
+	sigma_mean = (1 / 3) * (sigmaCopy.trace());
 	for (int i = 1; i <= 3; i++) {
 		for (int j = 1; j <= 3; j++) {
-			ind_ij = 3 * (i - 1) + j;
-			if (i == j) s_ij[ind_ij] = sigma[ind_ij] - sigma_mean;
-			else s_ij[ind_ij] = sigma[ind_ij];
+			if (i == j) s_ij.t2(i,j) = sigmaCopy.t2(i,j) - sigma_mean;
+			else s_ij.t2(i,j) = sigmaCopy.t2(i,j);
 		}
 	}
 
-	double mod_s = Tensor.tOps_L2norm(s_ij);
-	for (int i = 0; i < 9; i++) N_flow_vector[i] = (sqrt(3 / 2)) * s_ij[i] / mod_s;
+	double mod_s = s_ij.normL2();
+	for (int i = 0; i < 9; i++) N_flow_vector.t2(i) = (sqrt(3 / 2)) * s_ij.t2(i) / mod_s;
 
 	setNvec(N_flow_vector);
 }
 
-vector<vector<double>> UMAT_VonMisces::getLinearElasticTensor(const double E, const double v) const
+TensorO4 UMAT_VonMisces::getLinearElasticTensor(const double E, const double v) const
 {
-	vector<vector<double>> D, I_d, I_x_I;
-	vector<double> I(9, 0);
-	int ind_ij, ind_kl;
+	UnitTensorO4 I_d;
+	TensorO4 D, I_x_I;
+	TensorO2 I;
 	for (int i = 1; i <= 3; i++) {
 		for (int j = 1; j <= 3; j++) {
-			ind_ij = 3 * (i - 1) + j;
-			if (i == j) I[ind_ij] = 1;
+			if (i == j) I.t2(i,j) = 1;
 		}
 	}
-	TensorOps Tensor;
+
 	double G, K;	//Shear and bulk modulus
 	double A = 1;
-
 	G = E / (2 * (1 + v));
 	K = E / (3 * (1 - 2 * v));
 
-	I_d = Tensor.unit_4t(Tensor._Unit4Dev);
-	I_x_I = Tensor.tOps_DyadProduct(I, I);
+	I_d = UnitTensorO4(eIDTensor::UNIT_4_DEV);
+	I_x_I = TensorOperations::dyadProduct(I, I);
 
-	for (ind_ij = 0; ind_ij < 9; ind_ij++) {
-		for (ind_kl = 0; ind_kl < 9; ind_kl++) {
-			D[ind_ij][ind_kl] = 2 * G * I_d[ind_ij][ind_kl] + A * (K - (2 / 3) * G) * I_x_I[ind_ij][ind_kl];
+	for (int ind_ij = 0; ind_ij < 9; ind_ij++) {
+		for (int ind_kl = 0; ind_kl < 9; ind_kl++) {
+			D.t4(ind_ij, ind_kl) = 2 * G * I_d.t4(ind_ij, ind_kl) + A * (K - (2 / 3) * G) * I_x_I.t4(ind_ij, ind_kl);
 		}
 	}
 
@@ -188,17 +181,17 @@ void UMAT_VonMisces::hardening_law(eHardeningType H_type, double h, double sigma
 {
 	switch (H_type) {
 		case eHardeningType::LINEAR_ISOTROPIC: 
-			m_hardening_slope.mean = h;
-			m_sigma_y_init.mean = sigma_y_0;
+			m_hardening_slope = RandomProcess(h);
+			m_sigma_y_init = RandomProcess(sigma_y_0);
 			break;
 		default:
-			m_hardening_slope.mean = h;
-			m_sigma_y_init.mean = sigma_y_0;
+			m_hardening_slope = RandomProcess(h);
+			m_sigma_y_init = RandomProcess(sigma_y_0);
 			break;
 	}
 }
 
-void UMAT_VonMisces::computeFPKE(vector<double> sig_0)
+void UMAT_VonMisces::computeFPKE(TensorO2 sig_0)
 {
 	vector<double> zeros(9, 0.0);
 	vector<vector<double>> Ne_1_ij(9, zeros);		//Pre-yield Advective Tensor
@@ -208,7 +201,7 @@ void UMAT_VonMisces::computeFPKE(vector<double> sig_0)
 
 	vector<vector<double>> InitialStressPDF;
 	for (int i = 0; i < 9; i++) {
-		InitialStressPDF[i] = GetStochasticStress().GetInitialDistribution(ProbabilisticMat::eDistribution::NORMAL, sig_0[i], 1e-5, 100);
+		InitialStressPDF[i] = getStochasticStress().getInitialDistribution(100); // ProbabilisticMat::eDistribution::NORMAL, sig_0[i], 1e-5,
 	}
 		
 

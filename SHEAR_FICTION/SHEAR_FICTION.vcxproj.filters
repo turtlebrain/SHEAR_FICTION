@@ -21,42 +21,36 @@
     <ClCompile Include="SHEAR_FICTION.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="PlasticMat.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="ProbabilisticMat.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Tensors.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="TensorO2.cpp">
-      <Filter>Tensors</Filter>
-    </ClCompile>
-    <ClCompile Include="TensorO4.cpp">
-      <Filter>Tensors</Filter>
-    </ClCompile>
     <ClCompile Include="tensor_operations.cpp">
+      <Filter>Tensors</Filter>
+    </ClCompile>
+    <ClCompile Include="tensor_o2.cpp">
+      <Filter>Tensors</Filter>
+    </ClCompile>
+    <ClCompile Include="tensor_o4.cpp">
+      <Filter>Tensors</Filter>
+    </ClCompile>
+    <ClCompile Include="plastic_material.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="random_process.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="PlasticMat.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="ProbabilisticMat.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Tensors.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="TensorO2.h">
-      <Filter>Tensors</Filter>
-    </ClInclude>
-    <ClInclude Include="TensorO4.h">
-      <Filter>Tensors</Filter>
-    </ClInclude>
     <ClInclude Include="tensor_operations.h">
+      <Filter>Tensors</Filter>
+    </ClInclude>
+    <ClInclude Include="tensor_o2.h">
+      <Filter>Tensors</Filter>
+    </ClInclude>
+    <ClInclude Include="tensor_o4.h">
+      <Filter>Tensors</Filter>
+    </ClInclude>
+    <ClInclude Include="random_process.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="plastic_material.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

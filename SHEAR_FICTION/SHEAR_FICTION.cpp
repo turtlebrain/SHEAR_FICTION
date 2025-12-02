@@ -1,9 +1,11 @@
 // SHEAR_FICTION.cpp : This file contains the 'main' function. Program execution begins and ends there.
 //
 #include <iostream>
-#include "ProbabilisticMat.h"
-#include "PlasticMat.h"
-#include "Tensors.h"
+#include "random_process.h"
+#include "plastic_material.h"
+#include "tensor_operations.h"
+#include "tensor_o2.h"
+#include "tensor_o4.h"
 #include <vector>
 using namespace std;
 

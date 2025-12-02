@@ -1,4 +1,4 @@
-#include "TensorO2.h"
+#include "tensor_o2.h"
 #include "tensor_operations.h"
 #include <iostream>
 using namespace std;

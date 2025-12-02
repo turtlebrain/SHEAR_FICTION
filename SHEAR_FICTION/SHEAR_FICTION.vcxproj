@@ -147,20 +147,18 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="PlasticMat.cpp" />
-    <ClCompile Include="ProbabilisticMat.cpp" />
+    <ClCompile Include="plastic_material.cpp" />
+    <ClCompile Include="random_process.cpp" />
     <ClCompile Include="SHEAR_FICTION.cpp" />
-    <ClCompile Include="TensorO2.cpp" />
-    <ClCompile Include="TensorO4.cpp" />
-    <ClCompile Include="Tensors.cpp" />
+    <ClCompile Include="tensor_o2.cpp" />
+    <ClCompile Include="tensor_o4.cpp" />
     <ClCompile Include="tensor_operations.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="PlasticMat.h" />
-    <ClInclude Include="ProbabilisticMat.h" />
-    <ClInclude Include="TensorO2.h" />
-    <ClInclude Include="TensorO4.h" />
-    <ClInclude Include="Tensors.h" />
+    <ClInclude Include="plastic_material.h" />
+    <ClInclude Include="random_process.h" />
+    <ClInclude Include="tensor_o2.h" />
+    <ClInclude Include="tensor_o4.h" />
     <ClInclude Include="tensor_operations.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
