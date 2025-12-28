@@ -13,29 +13,44 @@
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
+    <Filter Include="Tensors">
+      <UniqueIdentifier>{95480dc0-9cf6-4c89-850a-53f877470c4e}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="SHEAR_FICTION.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="PlasticMat.cpp">
+    <ClCompile Include="tensor_operations.cpp">
+      <Filter>Tensors</Filter>
+    </ClCompile>
+    <ClCompile Include="tensor_o2.cpp">
+      <Filter>Tensors</Filter>
+    </ClCompile>
+    <ClCompile Include="tensor_o4.cpp">
+      <Filter>Tensors</Filter>
+    </ClCompile>
+    <ClCompile Include="plastic_material.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="TensorOps.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="ProbabilisticMat.cpp">
+    <ClCompile Include="random_process.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="PlasticMat.h">
+    <ClInclude Include="tensor_operations.h">
+      <Filter>Tensors</Filter>
+    </ClInclude>
+    <ClInclude Include="tensor_o2.h">
+      <Filter>Tensors</Filter>
+    </ClInclude>
+    <ClInclude Include="tensor_o4.h">
+      <Filter>Tensors</Filter>
+    </ClInclude>
+    <ClInclude Include="random_process.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="TensorOps.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="ProbabilisticMat.h">
+    <ClInclude Include="plastic_material.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
