@@ -14,6 +14,7 @@ public:
 public:
 	double& t2(size_t i, size_t j);
 	double& t2(size_t ind0_ij);
+	vector<double>& t2() { return _m_t2; }
 
 public:
 	double trace();								//Trace Operation -> Aii = tr(A)
